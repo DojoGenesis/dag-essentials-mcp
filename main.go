@@ -222,6 +222,7 @@ func layers(ctx context.Context, _ *mcp.CallToolRequest, in graphInput) (*mcp.Ca
 func main() {
 	s := mcp.NewServer(&mcp.Implementation{Name: "dag-essentials", Version: "0.1.0"}, nil)
 
+	// dag-verbs:begin — generated from dag-verbs.json by `go run ./tools/gen-verbs.go`; do not edit by hand
 	mcp.AddTool(s, &mcp.Tool{Name: "validate", Description: "Is the graph acyclic? If not, return a witness cycle (v0 -> ... -> v0)."}, validate)
 	mcp.AddTool(s, &mcp.Tool{Name: "toposort", Description: "One legal topological order (Kahn's algorithm). Reports whether the graph is acyclic."}, toposort)
 	mcp.AddTool(s, &mcp.Tool{Name: "critical_path", Description: "The longest (optionally weighted) chain — the floor on completion time no parallelism shortens."}, criticalPath)
@@ -231,6 +232,7 @@ func main() {
 	mcp.AddTool(s, &mcp.Tool{Name: "reduce", Description: "The transitive reduction: the unique minimal edge set with the same reachability (the Hasse diagram)."}, reduce)
 	mcp.AddTool(s, &mcp.Tool{Name: "reach", Description: "Can 'from' reach 'to' by following edges?"}, reach)
 	mcp.AddTool(s, &mcp.Tool{Name: "layers", Description: "Sugiyama longest-path rank of every node (sources are 0)."}, layers)
+	// dag-verbs:end
 
 	if err := s.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
 		log.Fatal(err)

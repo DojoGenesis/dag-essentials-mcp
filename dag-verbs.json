@@ -1,0 +1,28 @@
+{
+  "_doc": "Single source for the DAG essentials' two faces. MACHINE FACE: the 9 MCP tools in main.go, generated between the `dag-verbs:begin/end` markers by `go run ./tools/gen-verbs.go`. HUMAN FACE: the 11 contemplative verbs of 'The Phenomenology of the DAG' (madeofdoors essay §3), rendered into the site's verbs section by gen_verb_content.mjs. Each verb `enacts` a tool id, or `essay-only` when no single computable tool captures it (only 'Use'). 'frontier' carries two verbs (Hold + Orchestrate). Parity gate: check_verb_parity.py diffs tools[].id against main.go AND the rendered site. Contract owner: dag-essentials-mcp (machine repo owns the harder contract; the site reads it across the sibling dir). JSON not YAML because the parity gate must be stdlib-only and no stdlib (Go/Node/Python) parses YAML. Scout: TresPies-AI-Orchestration/scouts/2026-07-04_dag-madeofdoors-dual-nav-windows-handoff.md.",
+  "version": 1,
+  "tools": [
+    { "id": "validate",      "handler": "validate",     "fn": "FindCycle",           "description": "Is the graph acyclic? If not, return a witness cycle (v0 -> ... -> v0)." },
+    { "id": "toposort",      "handler": "toposort",     "fn": "TopoSort",            "description": "One legal topological order (Kahn's algorithm). Reports whether the graph is acyclic." },
+    { "id": "critical_path", "handler": "criticalPath", "fn": "LongestPath",         "description": "The longest (optionally weighted) chain — the floor on completion time no parallelism shortens." },
+    { "id": "width",         "handler": "width",        "fn": "Width",               "description": "The largest antichain (Dilworth's theorem) plus a minimum chain cover." },
+    { "id": "frontier",      "handler": "frontier",     "fn": "Frontier",            "description": "Given completed nodes, the ready set (nodes whose predecessors are all done)." },
+    { "id": "cone",          "handler": "cone",         "fn": "Cone",                "description": "A node's ancestors and descendants — the only honest circle a DAG allows." },
+    { "id": "reduce",        "handler": "reduce",       "fn": "TransitiveReduction", "description": "The transitive reduction: the unique minimal edge set with the same reachability (the Hasse diagram)." },
+    { "id": "reach",         "handler": "reach",        "fn": "Reachable",           "description": "Can 'from' reach 'to' by following edges?" },
+    { "id": "layers",        "handler": "layers",       "fn": "Layers",              "description": "Sugiyama longest-path rank of every node (sources are 0)." }
+  ],
+  "verbs": [
+    { "verb": "Encounter",   "enacts": "validate",      "gloss": "acyclicity felt as a fact of the body — every arrow a congealed *because*, a fossilized decision that this had to precede that." },
+    { "verb": "Use",         "enacts": "essay-only",    "gloss": "you don't consult a DAG, you run it — change one value and the engine fans the dirty mark across the exact transitive closure, no more, no less." },
+    { "verb": "Work with",   "enacts": "width",         "gloss": "negotiate width (room to parallelize, hands you can add) against depth (the critical path you can only endure)." },
+    { "verb": "Follow",      "enacts": "toposort",      "gloss": "commit to one legal flattening and walk it, millions of other valid orders superimposed behind your single line." },
+    { "verb": "Traverse",    "enacts": "reach",         "gloss": "the same skeleton read in two directions — forward carries values to the sinks, backward carries sensitivities up the identical graph." },
+    { "verb": "Sense",       "enacts": "layers",        "gloss": "see soundness before you measure it — a clean Sugiyama drawing reads downhill, a tangle reads as anxiety that is not metaphorical." },
+    { "verb": "Touch",       "enacts": "critical_path", "gloss": "reach for the spine that sets the floor on everything — the one chain you cannot dig below." },
+    { "verb": "Orchestrate", "enacts": "frontier",      "gloss": "keep the frontier saturated — every node whose dependencies are satisfied running, no worker idle while work exists." },
+    { "verb": "Hold",        "enacts": "frontier",      "gloss": "you never hold the graph, only its frontier — an antichain at the waterline of the presently-possible: affordance, not grasp." },
+    { "verb": "Encircle",    "enacts": "cone",          "gloss": "the DAG forbids the closed circle; the cone is the only honest encircling — ancestors swept backward, descendants forward." },
+    { "verb": "Layer",       "enacts": "reduce",        "gloss": "rank every node so all edges cross boundaries one way; strip to the unique transitive reduction — the poset wearing only what it must." }
+  ]
+}
