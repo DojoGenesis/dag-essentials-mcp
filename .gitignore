@@ -1,0 +1,13 @@
+# build artifacts
+/dag-essentials-mcp
+/dag-essentials-mcp.exe
+*.exe
+*.test
+*.out
+
+# go workspace / editor
+/vendor/
+go.work
+go.work.sum
+.idea/
+.vscode/
