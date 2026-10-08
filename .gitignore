@@ -11,3 +11,7 @@ go.work
 go.work.sum
 .idea/
 .vscode/
+
+# local build output and test caches
+/bin/
+__pycache__/
